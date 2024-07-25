@@ -1,17 +1,16 @@
 import { Inject, Injectable } from "@nestjs/common";
+import { inject, injectable } from "inversify";
 import { CreateProductCommand } from "src/Domain.Contract/Commands/Product/Create/CreateProductCommand";
 import { CreateProductCommandResult } from "src/Domain.Contract/Commands/Product/Create/CreateProductCommandResult";
-import { PriceDto } from "src/Domain.Contract/Dto/Product/PriceDto";
 import { Product } from "src/Domain/Product/Product";
 import { ICommandHandler } from "src/Framework.Core/Bus/ICommadnHandler";
 import { ICommand } from "src/Framework.Core/Bus/ICommand";
 import { ProductRepository } from "src/Infrastructure/Persistence.TypeOrm/Repository/Product/ProductRepository";
 
-@Injectable()
+@injectable()
 export class CreateProductCommandHandler implements ICommandHandler<CreateProductCommand,CreateProductCommandResult> {
     constructor(
-        @Inject("ProductRepo")
-        private readonly productRepository: ProductRepository
+        @inject("ProductRepository") private readonly productRepository: ProductRepository
       ){}
 
         RegisterCommand(): ICommand {
@@ -22,8 +21,8 @@ export class CreateProductCommandHandler implements ICommandHandler<CreateProduc
 
             var product = Product.create(command);
             
-            await this.productRepository.Insert(product);
+            //await this.productRepository.Insert(product);
 
-            return new CreateProductCommandResult("success", "customer saved.");
+            return new CreateProductCommandResult("success", "product saved.");
         }
   }

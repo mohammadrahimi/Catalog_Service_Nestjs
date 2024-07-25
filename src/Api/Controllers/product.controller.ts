@@ -6,16 +6,18 @@ import { PriceDto } from 'src/Domain.Contract/Dto/Product/PriceDto';
 import { CommandBus } from 'src/Framework.Core/Bus/CommandBus';
  
 
-@Controller()
+@Controller("/product")
 export class ProductController {
   constructor( 
-     @Inject("CommandBus")
+     @Inject("CommandBusProvider")
      private readonly commandBus: CommandBus,
   ) {}
  
 
-  @Get()
+    @Get("CreateProduct")
     CreateProduct(): void {
+      console.log("hi mamad");
+      
       var productCommand:CreateProductCommand  = new CreateProductCommand(
          "Tv LG",2, new PriceDto(100000,"rial"));
     

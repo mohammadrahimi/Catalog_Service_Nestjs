@@ -5,10 +5,13 @@ import { ApiModule } from './Api/Api.Module';
 import { ProductController } from './Api/Controllers/product.controller';
 import { BusModule } from './Framework.Core/BusModule/Bus.Module';
  
+ 
 
 @Module({
   imports: [BusModule,DatabaseModule,InfrastructureModule],
   controllers: [ProductController],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+   
+}

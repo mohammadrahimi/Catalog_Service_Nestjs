@@ -15,8 +15,9 @@ export class CommandBus implements ICommandBus{
 
    async Send(command: ICommand): Promise<ICommandResult> {
 
-        const handler = this.mapCommandHandlers.get(command);
-        return await handler.Handle(command);
+       const handler = this.mapCommandHandlers.get(command);
+       return await handler.Handle(command);
+        
 
     }
 

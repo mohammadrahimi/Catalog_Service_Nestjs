@@ -5,9 +5,9 @@ import { IDataMapper } from "src/Framework.Core/DataMapper/IDataMapper";
 import { ProductsEntity } from "../../Entity/Product.Entity";
 import { DataSource } from "typeorm";
 import { InjectDataSource } from "@nestjs/typeorm";
+import { injectable } from "inversify";
  
-
-@Injectable()
+@injectable()
 export class ProductRepository implements IProductRepository{
 
     constructor(

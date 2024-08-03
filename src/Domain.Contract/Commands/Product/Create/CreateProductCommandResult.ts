@@ -1,6 +1,6 @@
-import { ICommandResult } from "src/Framework.Core/Bus/ICommandResult";
+import { ICommandResult } from "@Framework.Core/Bus/ICommandResult";
 
-
+ 
 
 export class  CreateProductCommandResult implements ICommandResult{
     

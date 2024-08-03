@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { Product } from "src/Domain/Product/Product";
-import { IDataMapper } from "src/Framework.Core/DataMapper/IDataMapper";
 import { ProductsEntity } from "../../Entity/Product.Entity";
+import { IDataMapper } from "@Framework.Core/DataMapper/IDataMapper";
+import { Product } from "@Domain/Product/Product";
  
 
 
@@ -13,6 +13,7 @@ export class ProductDataMapper implements IDataMapper<Product,ProductsEntity> {
             productCount:entity.count,
             productName:entity.name,
             productPrice: {amount:entity.price.Amount,currency:entity.price.Currency},
+            categoryProductId:entity.categoryProductId,
 
         });
 
@@ -21,6 +22,8 @@ export class ProductDataMapper implements IDataMapper<Product,ProductsEntity> {
 
        return {
            id:String(product.Id.Value),
+           categoryProduct:null,
+           categoryProductId:product.categoryProductId,
            count:product.productCount,
            name:product.productName,
            price:product.productPrice

@@ -1,26 +1,15 @@
-import { inject, injectable } from "inversify";
-import { DeleteProductCommand } from "src/Domain.Contract/Commands/Product/Delete/DeleteProductCommand";
-import { DeleteProductCommandResult } from "src/Domain.Contract/Commands/Product/Delete/export class  DeleteProductCommandResult implements ICommandResult{";
-import { ICommandHandler } from "src/Framework.Core/Bus/ICommadnHandler";
-import { ICommand } from "src/Framework.Core/Bus/ICommand";
-import { ProductRepository } from "src/Infrastructure/Persistence.TypeOrm/Repository/Product/ProductRepository";
+import { DeleteProductCommand } from "@Domain.Contract/Commands/Product/Delete/DeleteProductCommand";
+import { ProductRepository } from "@Infrastructure/Persistence.TypeOrm/Repository/Product/ProductRepository";
+import { Inject, Injectable } from "@nestjs/common";
+import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 
-@injectable()
-export class DeleteProductCommandHandler implements ICommandHandler<DeleteProductCommand,DeleteProductCommandResult> {
+ 
+@CommandHandler(DeleteProductCommand)
+export class DeleteProductCommandHandler implements ICommandHandler<DeleteProductCommand> {
     constructor(
-        //@inject("ProductRepo")
-        //private readonly productRepository: ProductRepository
+         private readonly productRepository: ProductRepository
       ){}
-
-        RegisterCommand(): ICommand {
-           return DeleteProductCommand;
-        }
-
-       async Handle(command: DeleteProductCommand): Promise<DeleteProductCommandResult> {
-
-            
-            //await this.productRepository.Delete(command.productId);
-
-            return new DeleteProductCommandResult("success", "product saved.");
-        }
+  async execute(command: DeleteProductCommand): Promise<any> {
+    await this.productRepository.Delete(command.productId);
   }
+}

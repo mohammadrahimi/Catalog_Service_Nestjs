@@ -1,12 +1,12 @@
 import { shallowEqual } from "shallow-equal-object";
-import { v4 as UUID } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export abstract class Entity<TId>  {
   public readonly Id : TId;
 
   constructor(id?: TId) {
-    this.Id  = id || UUID();
+    this.Id  = id  ;
   }
 
   

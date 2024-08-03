@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { CategoryProductEntity } from "./CategoryProduct.Entity";
+import { ForeignKeyMetadata } from "typeorm/metadata/ForeignKeyMetadata";
 
 @Entity({name:'Products'})
 export class ProductsEntity { 
@@ -17,5 +19,13 @@ export class ProductsEntity {
 
     @Column({type:"simple-json"})
     price: {Amount:number,Currency:string};
+
+    
+    @Column({ type:"uuid", nullable:false })
+    categoryProductId: string;
+
+    @ManyToOne( () =>  CategoryProductEntity, (categoryProduct) => categoryProduct.Products )
+    @JoinColumn({ name: "categoryProductId" })
+    categoryProduct: CategoryProductEntity;
 
 }

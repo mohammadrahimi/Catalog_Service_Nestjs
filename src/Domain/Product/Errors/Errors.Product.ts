@@ -1,4 +1,6 @@
-import { ErrorBase } from "src/Framework.Core/Error/Error.Base";
+import { ErrorBase } from "@Framework.Core/Error/Error.Base";
+
+ 
 
 export   namespace DomainErrors {
 
@@ -16,6 +18,11 @@ export   namespace DomainErrors {
      export class ProductPriceIsNull  extends  ErrorBase  {
       public  constructor() {
           super('400', 400, "ProductPrice Is Null!");
+        }
+     }
+     export class CategoryProductIdIsEmpty  extends  ErrorBase  {
+      public  constructor() {
+          super('400', 400, "CategoryProductId Is Null!");
         }
      }
      

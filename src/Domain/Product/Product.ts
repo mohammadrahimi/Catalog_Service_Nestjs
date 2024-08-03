@@ -1,25 +1,29 @@
-import { AggregateRoot } from "src/Framework.Core/Domain/AggregateRoot";
+import { AggregateRoot } from "@Framework.Core/Domain/AggregateRoot";
 import { ProductId } from "./ValueObjects/ProductId";
 import { Price } from "./ValueObjects/Price";
-import { CreateProductCommand } from "src/Domain.Contract/Commands/Product/Create/CreateProductCommand";
-import { ProductCreatedEvent } from "src/Domain.Contract/Event/Product/ProductCreatedEvent";
+import { CreateProductCommand } from "@Domain.Contract/Commands/Product/Create/CreateProductCommand";
 import { DomainErrors } from "./Errors/Errors.Product";
+import { ProductCreatedEvent } from "@Domain.Contract/Event/Product/ProductCreatedEvent";
 
+ 
 export class Product extends AggregateRoot<ProductId> { 
 
    private     _productName:  string;
    private     _productCount: number;
    private     _productPrice: Price;
+   private     _categoryProductId: string;
    
    private constructor(productName : string,
                         productCount:number,
-                        productPrice: Price)
+                        productPrice: Price,
+                        categoryProductId: string)
     {
         super(ProductId.CreateUnique());
         
         this._productName=productName;
         this._productCount=productCount;
         this._productPrice=productPrice;
+        this._categoryProductId=categoryProductId;
     }
 
     public static create(command: CreateProductCommand) {
@@ -34,13 +38,17 @@ export class Product extends AggregateRoot<ProductId> {
             (command.productPrice.amount <=0 &&  command.productPrice.currency !== "")){
               throw  new DomainErrors.ProductPriceIsNull();
         }
+        if(command.categoryProductId === "" ||  command.categoryProductId === undefined ){
+            throw new DomainErrors.CategoryProductIdIsEmpty();
+        }
 
         var _price = Price.Create(command.productPrice.amount, command.productPrice.currency);
         
         var _product = new Product(
             command.productName,
             command.productCount,
-            _price
+            _price,
+            command.categoryProductId
         );
 
         _product.AddEventChanges(
@@ -48,7 +56,8 @@ export class Product extends AggregateRoot<ProductId> {
                String(_product.Id.Value),
                command.productName,
                command.productCount,
-               command.productPrice
+               command.productPrice,
+               command.categoryProductId
             )
         )
 
@@ -64,6 +73,9 @@ export class Product extends AggregateRoot<ProductId> {
     }
     public get productPrice(): Price {
         return this._productPrice;
+    }
+    public get categoryProductId(): string {
+        return this._categoryProductId;
     }
 
 }

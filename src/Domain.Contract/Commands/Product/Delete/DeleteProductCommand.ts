@@ -1,5 +1,4 @@
- 
-import { ICommand } from "src/Framework.Core/Bus/ICommand";
+import { ICommand } from "@nestjs/cqrs";
 
  
 export class DeleteProductCommand implements ICommand {

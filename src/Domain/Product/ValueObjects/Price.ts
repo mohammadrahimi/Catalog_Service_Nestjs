@@ -1,5 +1,6 @@
+import { ValueObject } from "@Framework.Core/Domain/ValueObject";
 
-import { ValueObject } from "src/Framework.Core/Domain/ValueObject";
+ 
 
 interface IPriceProps {
     currency : string;

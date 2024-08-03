@@ -1,9 +1,10 @@
 
-import { v4 as UUID } from 'uuid';
-import { ValueObject } from "src/Framework.Core/Domain/ValueObject";
+import { ValueObject } from '@Framework.Core/Domain/ValueObject';
+import { v4 as uuidv4 } from 'uuid';
+ 
 
 interface IProductIdProps {
-    value: UUID,
+    value: string ,
 }
 
 export  class  ProductId extends ValueObject<IProductIdProps>{
@@ -12,16 +13,16 @@ export  class  ProductId extends ValueObject<IProductIdProps>{
         super(value);
     }
 
-      get Value(): UUID {
+      get Value(): string {
         return this.value.value;
       }
 
-      public static Create(value: UUID) : ProductId {
+      public static Create(value: string) : ProductId {
         return new ProductId({value:value});
       }
 
       public static CreateUnique() : ProductId {
-          return new ProductId({value:UUID()});
+          return new ProductId({value:uuidv4()});
       }
 
 }
